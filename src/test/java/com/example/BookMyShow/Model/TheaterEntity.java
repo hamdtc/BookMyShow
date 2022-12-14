@@ -1,11 +1,15 @@
 package com.example.BookMyShow.Model;
 
+import com.example.BookMyShow.enums.SeatType;
+import com.example.BookMyShow.enums.TheaterType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,20 +17,30 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "theaters")
 public class TheaterEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Enum seatType;
+    @Column(name = "name",nullable = false)
     private String name;
-    private String address;
+
+    @Column(name = "city",nullable = false)
     private String city;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    List<ShowEntity> showsList;
+    @Column(name = "address",nullable = false)
+    private String address;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    List<TheaterSeatEntity> theaterSeatEntities;
+
+    private TheaterType type;
+
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ShowEntity> shows;
+
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<TheaterSeatEntity> seats = new ArrayList<>();
 }

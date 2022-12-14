@@ -22,7 +22,10 @@ public class MovieEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "release_date", nullable = false)
     private Date ReleaseDate;
 
     @OneToMany(cascade = CascadeType.ALL)

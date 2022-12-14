@@ -1,10 +1,7 @@
 package com.example.BookMyShow.Model;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name="users")
 public class UserEntity {
 
@@ -22,7 +20,9 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "name",nullable = false)
     private String name;
+    @Column(name = "mobile",nullable = false)
     private String mobile;
 
     @OneToMany(cascade=CascadeType.ALL)

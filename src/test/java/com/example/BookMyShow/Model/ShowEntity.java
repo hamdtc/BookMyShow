@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -18,22 +19,34 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "shows")
 public class ShowEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "show_date", nullable = false)
     private Date showDate;
+
+    @Column(name = "show_time", nullable = false)
     private Time showTime;
-    @UpdateTimestamp
+
+    @CreationTimestamp
+    @Column(name = "created_at")
     private Date createAt;
 
     @UpdateTimestamp
-    private Date updateAt;
-
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     @ManyToOne
+    @JoinColumn
+    @JsonIgnore
+    private MovieEntity movie;
+
+    @ManyToOne
+    @JoinColumn
     @JsonIgnore
     private TheaterEntity theater;
 
