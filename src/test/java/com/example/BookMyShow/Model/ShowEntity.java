@@ -1,16 +1,13 @@
 package com.example.BookMyShow.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "shows")
 public class ShowEntity {
 
@@ -27,10 +25,10 @@ public class ShowEntity {
     private int id;
 
     @Column(name = "show_date", nullable = false)
-    private Date showDate;
+    private LocalDate showDate;
 
     @Column(name = "show_time", nullable = false)
-    private Time showTime;
+    private LocalTime showTime;
 
     @CreationTimestamp
     @Column(name = "created_at")

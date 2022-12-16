@@ -2,12 +2,10 @@ package com.example.BookMyShow.Model;
 
 import com.example.BookMyShow.enums.SeatType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "show_seats")
 public class ShowSeatsEntity {
 
@@ -34,7 +33,7 @@ public class ShowSeatsEntity {
     private Boolean booked;
 
     @Column(name = "booked_at")
-    private Date bookedAt;
+    private LocalDate bookedAt;
 
     @ManyToOne
     @JoinColumn

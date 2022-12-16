@@ -1,12 +1,10 @@
 package com.example.BookMyShow.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "movies")
 public class MovieEntity {
 
@@ -26,7 +25,7 @@ public class MovieEntity {
     private String name;
 
     @Column(name = "release_date", nullable = false)
-    private Date ReleaseDate;
+    private LocalDate releaseDate;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnore

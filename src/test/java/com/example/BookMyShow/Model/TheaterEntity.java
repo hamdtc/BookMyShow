@@ -1,12 +1,8 @@
 package com.example.BookMyShow.Model;
 
-import com.example.BookMyShow.enums.SeatType;
 import com.example.BookMyShow.enums.TheaterType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "theaters")
 public class TheaterEntity {
 
@@ -42,5 +39,5 @@ public class TheaterEntity {
 
     @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<TheaterSeatEntity> seats = new ArrayList<>();
+    private List<TheaterSeatEntity> seats;
 }

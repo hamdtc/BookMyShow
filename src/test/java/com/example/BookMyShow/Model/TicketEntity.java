@@ -1,12 +1,10 @@
 package com.example.BookMyShow.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -14,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "tickets")
 public class TicketEntity {
 
@@ -28,7 +27,7 @@ public class TicketEntity {
     private double amount;
 
     @Column(name = "booked_at",nullable = false)
-    private Date bookedAt;
+    private LocalDate bookedAt;
 
     @ManyToOne
     @JoinColumn
