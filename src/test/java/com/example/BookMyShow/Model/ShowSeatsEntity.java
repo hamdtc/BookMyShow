@@ -14,8 +14,10 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
+@ToString
 @Table(name = "show_seats")
 public class ShowSeatsEntity {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,13 +29,15 @@ public class ShowSeatsEntity {
     @Column(name = "rate", nullable = false)
     private int rate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "seat_type", nullable = false)
     private SeatType seatType;
 
+    @Column(name = "is_booked", columnDefinition = "bit(1) default 0", nullable = false)
     private Boolean booked;
 
     @Column(name = "booked_at")
-    private LocalDate bookedAt;
+    private Date bookedAt;
 
     @ManyToOne
     @JoinColumn
@@ -44,4 +48,8 @@ public class ShowSeatsEntity {
     @JoinColumn
     @JsonIgnore
     private TicketEntity ticket;
+
+    public boolean isBooked() {
+        return booked;
+    }
 }
