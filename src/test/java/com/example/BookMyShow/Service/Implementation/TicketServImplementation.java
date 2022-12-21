@@ -1,6 +1,7 @@
 package com.example.BookMyShow.Service.Implementation;
 
 import com.example.BookMyShow.Converter.TicketConverter;
+import com.example.BookMyShow.Dto.ResponseDto.TicketRespDto;
 import com.example.BookMyShow.Dto.bookRequestDto;
 import com.example.BookMyShow.Model.ShowEntity;
 import com.example.BookMyShow.Model.ShowSeatsEntity;
@@ -30,11 +31,13 @@ public class TicketServImplementation implements TicketService {
 
 
     @Override
-    public bookRequestDto bookTicket(bookRequestDto bookRequestDto) {
+    public TicketRespDto bookTicket(bookRequestDto bookRequestDto) {
 
         UserEntity userEntity=userRepository.findById(bookRequestDto.getId()).get();
 
         ShowEntity showEntity=showRepository.findById(bookRequestDto.getId()).get();
+
+
 
         Set<String> requestedSeats=bookRequestDto.getRequestedSeat();
         SeatType seatType=bookRequestDto.getSeatType();
@@ -48,7 +51,7 @@ public class TicketServImplementation implements TicketService {
                     && requestedSeats.contains(seat.getSeatNo()));
             bookedSeats.add(seat);
         }
-
+        for(ShowSeatsEntity seat: bookedSeats) System.out.println(seat);
         if(bookedSeats.size() != requestedSeats.size())
             throw new Error ("Request all seats not Available try again");
 
@@ -65,16 +68,27 @@ public class TicketServImplementation implements TicketService {
             amount+=bookSeat.getRate();
         }
         ticketEntity.setAmount(amount);
-        ticketEntity.setAllotedSeats(requestedSeats);
+        ticketEntity.setAllotedSeats(convertListOfSeatsEntityToString(bookedSeats));
 
         ticketRepository.save(ticketEntity);
         return TicketConverter.entityToDto(ticketEntity);
     }
+    public String convertListOfSeatsEntityToString(List<ShowSeatsEntity> bookedSeats){
+
+        String str = "";
+        for(ShowSeatsEntity showSeatsEntity : bookedSeats){
+
+            str = str + showSeatsEntity.getSeatNo()+" ";
+        }
+
+        return str;
+
+    }
 
     @Override
-    public bookRequestDto getTicket(int id) {
+    public TicketRespDto getTicket(int id) {
         TicketEntity ticketEntity=ticketRepository.findById(id).get();
-        bookRequestDto ticketDto=TicketConverter.entityToDto(ticketEntity);
-        return ticketDto;
+        TicketRespDto ticketRespDto=TicketConverter.entityToDto(ticketEntity);
+        return ticketRespDto;
     }
 }

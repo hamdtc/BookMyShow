@@ -1,20 +1,23 @@
 package com.example.BookMyShow.Converter;
 
-import com.example.BookMyShow.Dto.ShowDto;
+import com.example.BookMyShow.Dto.EntryDto.ShowEntryDto;
+import com.example.BookMyShow.Dto.ResponseDto.ShowRespDto;
 import com.example.BookMyShow.Model.ShowEntity;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ShowConverter {
 
-    public static ShowEntity dtoToEntity(ShowDto showDto){
-        return ShowEntity.builder().showTime(showDto.getShowTime()).showDate(showDto.getShowDate())
-                .id(showDto.getId()).build();
+    public static ShowEntity dtoToEntity(ShowEntryDto showEntryDto){
+        return ShowEntity.builder().showTime(showEntryDto.getShowTime()).showDate(showEntryDto.getShowDate())
+                .build();
 
 
     }
-    public static ShowDto entityToDto(ShowEntity showEntity) {
-        return ShowDto.builder().showTime(showEntity.getShowTime()).showDate(showEntity.getShowDate())
+    public static ShowRespDto entityToDto(ShowEntity showEntity,ShowEntryDto showEntryDto) {
+        return ShowRespDto.builder().showTime(showEntity.getShowTime()).
+                showDate(showEntity.getShowDate()).id(showEntity.getId()).
+                movieRespDto(showEntryDto.getMovieResponseDto()).theaterRespDto(showEntryDto.getTheaterResponseDto())
                 .build();
     }
 }

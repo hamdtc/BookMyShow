@@ -25,6 +25,7 @@ public class TheaterSeatEntity {
     @Column(name = "rate",nullable = false)
     private int rate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "seat_type",nullable = false)
     private SeatType seatType;
 

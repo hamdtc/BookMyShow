@@ -1,4 +1,4 @@
-package com.example.BookMyShow.Dto;
+package com.example.BookMyShow.Dto.EntryDto;
 
 import lombok.*;
 
@@ -7,9 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDto {
-
-    private int id;
+public class UserEntryDto {
 
     @NonNull
     private String name;

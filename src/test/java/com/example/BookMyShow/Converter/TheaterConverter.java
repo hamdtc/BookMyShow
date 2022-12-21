@@ -1,6 +1,7 @@
 package com.example.BookMyShow.Converter;
 
-import com.example.BookMyShow.Dto.TheaterDto;
+import com.example.BookMyShow.Dto.EntryDto.TheaterEntryDto;
+import com.example.BookMyShow.Dto.ResponseDto.TheaterRespDto;
 import com.example.BookMyShow.Model.TheaterEntity;
 import lombok.experimental.UtilityClass;
 
@@ -8,13 +9,15 @@ import lombok.experimental.UtilityClass;
 public class TheaterConverter {
 
 
-    public TheaterEntity dtoToEntity(TheaterDto theaterDto){
-        return TheaterEntity.builder().name(theaterDto.getName()).city(theaterDto.getCity())
-                .address(theaterDto.getAddress()).build();
+    public TheaterEntity dtoToEntity(TheaterEntryDto theaterEntryDto){
+        return TheaterEntity.builder().name(theaterEntryDto.getName()).city(theaterEntryDto.getCity())
+                .address(theaterEntryDto.getAddress()).build();
     }
 
-    public TheaterDto entityToDto(TheaterEntity theaterEntity){
-        return null;
+    public TheaterRespDto entityToDto(TheaterEntity theaterEntity){
+        return TheaterRespDto.builder().id(theaterEntity.getId()).city(theaterEntity.getCity())
+                .Address(theaterEntity.getAddress()).name(theaterEntity.getName()).type(theaterEntity.getType())
+                .build();
 
     }
 }

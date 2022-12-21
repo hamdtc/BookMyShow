@@ -25,7 +25,7 @@ public class TicketEntity {
     private int id;
 
     @Column(name = "alloted_seats",nullable = false)
-    private Set<String> allotedSeats;
+    private String  allotedSeats;
 
     @Column(name = "amount",nullable = false)
     private double amount;
@@ -46,7 +46,7 @@ public class TicketEntity {
     ShowEntity shows;
 
 
-    @OneToMany(mappedBy = "show",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ticket",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ShowSeatsEntity> seats;
 }

@@ -22,9 +22,10 @@ public class UserEntity {
 
     @Column(name = "name",nullable = false)
     private String name;
+
     @Column(name = "mobile",nullable = false)
     private String mobile;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<TicketEntity> tickets;
 }

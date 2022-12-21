@@ -31,7 +31,7 @@ public class TheaterEntity {
     private String address;
 
 
-    private TheaterType type;
+    TheaterType type;
 
     @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
     @JsonIgnore

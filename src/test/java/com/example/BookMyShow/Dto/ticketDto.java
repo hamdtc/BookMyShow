@@ -1,9 +1,8 @@
 package com.example.BookMyShow.Dto;
 
+import com.example.BookMyShow.Dto.ResponseDto.ShowDto;
+import com.example.BookMyShow.Dto.ResponseDto.UserRespDto;
 import lombok.*;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -14,10 +13,12 @@ public class ticketDto {
 
     private int id;
 
-    private Set<String> allotedSeats;
+    private String allotedSeats;
     private double amount;
 
     private ShowDto showDto;
-    private UserDto userDto;
+
+    @NonNull
+    private UserRespDto userDto;
 
 }

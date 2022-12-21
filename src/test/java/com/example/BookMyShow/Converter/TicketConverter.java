@@ -1,5 +1,6 @@
 package com.example.BookMyShow.Converter;
 
+import com.example.BookMyShow.Dto.ResponseDto.TicketRespDto;
 import com.example.BookMyShow.Dto.bookRequestDto;
 import com.example.BookMyShow.Model.TicketEntity;
 import lombok.experimental.UtilityClass;
@@ -7,13 +8,12 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class TicketConverter {
 
-    public TicketEntity dtoToEntity(bookRequestDto ticketDto){
-        return TicketEntity.builder().allotedSeats(ticketDto.getAllotedSeats()).amount(ticketDto.getAmount())
-                .bookedAt(ticketDto.getBookedAt()).build();
+    public static TicketEntity dtoToEntity(bookRequestDto ticketDto){
+        return null;
 
     }
-    public bookRequestDto entityToDto(TicketEntity ticketEntity){
-        return bookRequestDto.builder().id(ticketEntity.getId()).allotedSeats(ticketEntity.getAllotedSeats())
-                .amount(ticketEntity.getAmount()).bookedAt(ticketEntity.getBookedAt()).build();
+    public static TicketRespDto entityToDto(TicketEntity ticketEntity){
+        return TicketRespDto.builder().id(ticketEntity.getId()).allotedSeats(ticketEntity.getAllotedSeats())
+                .amount(ticketEntity.getAmount()).build();
     }
 }

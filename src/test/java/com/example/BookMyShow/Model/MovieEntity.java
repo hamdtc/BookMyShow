@@ -24,10 +24,14 @@ public class MovieEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "release_date", nullable = false)
+    @Column(name = "release_date", columnDefinition = "DATE", nullable = false)
     private LocalDate releaseDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
+
+    //Connecting the other table
+    //Since this is the parent (how did we come to know : its having mappedBy and cascade )
+    //child table : its having @JoinColumn Annotation
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ShowEntity> shows;
 }

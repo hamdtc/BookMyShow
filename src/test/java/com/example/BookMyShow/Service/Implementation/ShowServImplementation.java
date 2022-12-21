@@ -1,13 +1,16 @@
 package com.example.BookMyShow.Service.Implementation;
 
 import com.example.BookMyShow.Converter.ShowConverter;
-import com.example.BookMyShow.Dto.ShowDto;
+import com.example.BookMyShow.Dto.EntryDto.ShowEntryDto;
+import com.example.BookMyShow.Dto.ResponseDto.ShowRespDto;
 import com.example.BookMyShow.Model.*;
 import com.example.BookMyShow.Repository.MovieRepository;
 import com.example.BookMyShow.Repository.ShowRepository;
+import com.example.BookMyShow.Repository.ShowSeatsRepository;
 import com.example.BookMyShow.Repository.TheaterRepository;
 import com.example.BookMyShow.Service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,39 +27,76 @@ public class ShowServImplementation implements ShowService {
 
     @Autowired
     ShowRepository showRepository;
+    @Autowired
+    ShowSeatsRepository showSeatsRepository;
+
 
     @Override
-    public ShowDto addShow(ShowDto showDto) {
-        ShowEntity showEntity= ShowConverter.dtoToEntity(showDto);
+    public ShowRespDto addShow(ShowEntryDto showEntryDto) {
+        ShowEntity showEntity= ShowConverter.dtoToEntity(showEntryDto);
 
-        MovieEntity movieEntity=movieRepository.findById(showDto.getMovieDto().getId()).get();
-        showEntity.setMovie(movieEntity);
+        //MovieEntity
+        MovieEntity movieEntity = movieRepository.findById(showEntryDto.getMovieResponseDto().getId()).get();
 
-        TheaterEntity theaterEntity=theaterRepository.findById(showDto.getTheaterDto().getId()).get();
+        TheaterEntity theaterEntity = theaterRepository.findById(showEntryDto.getTheaterResponseDto().getId()).get();
+
+
+        showEntity.setMovie(movieEntity); //Why are we setting these varibble
         showEntity.setTheater(theaterEntity);
 
-        List<ShowSeatsEntity> seats=createShowSeats(theaterEntity.getSeats(),showEntity);
+        showEntity = showRepository.save(showEntity);
 
-        showRepository.save(showEntity);
-        return showDto;
+
+        //We need to pass the list of the theater seats
+        List<ShowSeatsEntity> showSeatsEntityList = generateShowEntitySeats(theaterEntity.getSeats(),showEntity);
+        showSeatsRepository.saveAll(showSeatsEntityList);
+        //We need to create Response Show Dto.
+
+        ShowRespDto showRespDto = ShowConverter.entityToDto(showEntity,showEntryDto);
+
+        return showRespDto;
     }
     //create copy of seat to a show
-    public List<ShowSeatsEntity> createShowSeats(List<TheaterSeatEntity> theaterSeat,ShowEntity show){
 
-        List<ShowSeatsEntity> seats=new ArrayList<>();
-        for(TheaterSeatEntity seat: theaterSeat){
-            ShowSeatsEntity showSeats= ShowSeatsEntity.builder().id(seat.getId()).seatNo(seat.getSeatNo())
-                    .seatType(seat.getSeatType()).booked(false).show(show).build();
-            seats.add(showSeats);
+    public List<ShowSeatsEntity> generateShowEntitySeats(List<TheaterSeatEntity> theaterSeatsEntityList,ShowEntity showEntity){
+
+        List<ShowSeatsEntity> showSeatsEntityList = new ArrayList<>();
+
+        //log.info(String.valueOf(theaterSeatsEntityList));
+//        log.info("The list of theaterEntity Seats");
+//        for(TheaterSeatsEntity tse: theaterSeatsEntityList){
+//            log.info(tse.toString());
+//        }
+
+
+        for(TheaterSeatEntity tse : theaterSeatsEntityList){
+
+            ShowSeatsEntity showSeatsEntity = ShowSeatsEntity.builder().seatNo(tse.getSeatNo())
+                    .seatType(tse.getSeatType())
+                    .rate(tse.getRate())
+                    .build();
+
+            showSeatsEntityList.add(showSeatsEntity);
         }
-        return seats;
+
+
+        //We need to set the show Entity for each of the ShowSeat....
+        for(ShowSeatsEntity showSeatsEntity:showSeatsEntityList){
+            showSeatsEntity.setShow(showEntity);
+        }
+
+        showEntity.setSeats(showSeatsEntityList);
+        return showSeatsEntityList;
+
     }
 
     @Override
-    public ShowDto getShow(int id) {
+    public ShowRespDto getShow(int id) {
         ShowEntity showEntity=showRepository.findById(id).get();
-        ShowDto showDto=ShowConverter.entityToDto(showEntity);
-        return showDto;
+
+        ShowEntryDto showEntryDto = null;
+        ShowRespDto showRespDto=ShowConverter.entityToDto(showEntity,showEntryDto);
+        return showRespDto;
 
     }
 }

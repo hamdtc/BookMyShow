@@ -1,7 +1,8 @@
 package com.example.BookMyShow.Service.Implementation;
 
 import com.example.BookMyShow.Converter.UserConverter;
-import com.example.BookMyShow.Dto.UserDto;
+import com.example.BookMyShow.Dto.EntryDto.UserEntryDto;
+import com.example.BookMyShow.Dto.ResponseDto.UserRespDto;
 import com.example.BookMyShow.Model.UserEntity;
 import com.example.BookMyShow.Repository.UserRepository;
 import com.example.BookMyShow.Service.UserService;
@@ -14,17 +15,17 @@ public class UserServImplementation implements UserService {
         UserRepository userRepository;
 
         @Override
-        public void addUser(UserDto userDto){
+        public void addUser(UserEntryDto userEntryDto){
 
-            UserEntity userEntity = UserConverter.dtoToEntity(userDto);
+            UserEntity userEntity = UserConverter.dtoToEntity(userEntryDto);
             userRepository.save(userEntity);
         }
 
         @Override
-        public UserDto getUser(int id){
+        public UserRespDto getUser(int id){
 
             UserEntity userEntity = userRepository.findById(id).get();
-            UserDto userDto = UserConverter.entityToDto(userEntity);
-            return userDto;
+            UserRespDto userRespDto = UserConverter.entityToDto(userEntity);
+            return userRespDto;
         }
 }

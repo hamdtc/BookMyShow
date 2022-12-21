@@ -1,12 +1,13 @@
 package com.example.BookMyShow.Service;
 
-import com.example.BookMyShow.Dto.ShowDto;
+import com.example.BookMyShow.Dto.EntryDto.ShowEntryDto;
+import com.example.BookMyShow.Dto.ResponseDto.ShowRespDto;
 
 public interface ShowService {
     //add
-   public ShowDto addShow(ShowDto showDto);
+   public ShowRespDto addShow(ShowEntryDto showEntryDto);
 
 
     //get
-   public ShowDto getShow(int id);
+   public ShowRespDto getShow(int id);
 }

@@ -24,17 +24,20 @@ public class ShowEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "show_date", nullable = false)
+    @Column(name = "show_date", columnDefinition = "DATE", nullable = false)
     private LocalDate showDate;
 
-    @Column(name = "show_time", nullable = false)
+    @Column(name = "show_time", columnDefinition = "TIME", nullable = false)
     private LocalTime showTime;
 
+
     @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
-    private Date createAt;
+    private Date createdAt;
 
     @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
 
@@ -48,11 +51,13 @@ public class ShowEntity {
     @JsonIgnore
     private TheaterEntity theater;
 
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<TicketEntity> tickets;
 
-    @OneToMany(cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ShowSeatsEntity> seats;
+
 }

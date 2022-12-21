@@ -1,4 +1,4 @@
-package com.example.BookMyShow.Dto;
+package com.example.BookMyShow.Dto.ResponseDto;
 
 import com.example.BookMyShow.Service.Implementation.TheaterServImplementation;
 import com.example.BookMyShow.enums.TheaterType;
@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TheaterDto {
+public class TheaterRespDto {
 
     private int id;
     @NonNull
@@ -19,5 +19,6 @@ public class TheaterDto {
 
     private String Address;
 
-    ShowDto showDto;
+    private TheaterType type;
+    //ShowDto showDto;
 }

@@ -1,4 +1,4 @@
-package com.example.BookMyShow.Dto;
+package com.example.BookMyShow.Dto.ResponseDto;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MovieDto {
+public class MovieRespDto {
 
     private int id;
 
