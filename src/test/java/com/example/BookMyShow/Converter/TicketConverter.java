@@ -13,7 +13,7 @@ public class TicketConverter {
 
     }
     public static TicketRespDto entityToDto(TicketEntity ticketEntity){
-        return TicketRespDto.builder().id(ticketEntity.getId()).allotedSeats(ticketEntity.getAllotedSeats())
+        return TicketRespDto.builder().id(ticketEntity.getId()).allotedSeats(ticketEntity.getAllottedSeats())
                 .amount(ticketEntity.getAmount()).build();
     }
 }

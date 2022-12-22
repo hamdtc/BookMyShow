@@ -1,6 +1,6 @@
 package com.example.BookMyShow.Dto;
 
-import com.example.BookMyShow.Dto.ResponseDto.ShowDto;
+import com.example.BookMyShow.Dto.ResponseDto.ShowRespDto;
 import com.example.BookMyShow.Dto.ResponseDto.UserRespDto;
 import lombok.*;
 
@@ -16,7 +16,7 @@ public class ticketDto {
     private String allotedSeats;
     private double amount;
 
-    private ShowDto showDto;
+    private ShowRespDto showDto;
 
     @NonNull
     private UserRespDto userDto;

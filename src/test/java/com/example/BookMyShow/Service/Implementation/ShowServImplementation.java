@@ -71,7 +71,7 @@ public class ShowServImplementation implements ShowService {
 
         for(TheaterSeatEntity tse : theaterSeatsEntityList){
 
-            ShowSeatsEntity showSeatsEntity = ShowSeatsEntity.builder().seatNo(tse.getSeatNo())
+            ShowSeatsEntity showSeatsEntity = ShowSeatsEntity.builder().seatNumber(tse.getSeatNo())
                     .seatType(tse.getSeatType())
                     .rate(tse.getRate())
                     .build();

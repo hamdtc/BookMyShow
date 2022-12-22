@@ -48,14 +48,14 @@ public class TicketServImplementation implements TicketService {
         List<ShowSeatsEntity> bookedSeats=new ArrayList<>();
         for(ShowSeatsEntity seat:availableSeats ){
             if(!seat.isBooked() && seat.getSeatType().equals(bookRequestDto.getSeatType())
-                    && requestedSeats.contains(seat.getSeatNo()));
+                    && requestedSeats.contains(seat.getSeatNumber()));
             bookedSeats.add(seat);
         }
         for(ShowSeatsEntity seat: bookedSeats) System.out.println(seat);
         if(bookedSeats.size() != requestedSeats.size())
             throw new Error ("Request all seats not Available try again");
 
-        TicketEntity ticketEntity= TicketEntity.builder().user(userEntity).shows(showEntity).
+        TicketEntity ticketEntity= TicketEntity.builder().user(userEntity).show(showEntity).
               seats(bookedSeats).build();
 
 
@@ -68,7 +68,8 @@ public class TicketServImplementation implements TicketService {
             amount+=bookSeat.getRate();
         }
         ticketEntity.setAmount(amount);
-        ticketEntity.setAllotedSeats(convertListOfSeatsEntityToString(bookedSeats));
+
+        ticketEntity.setAllottedSeats(convertListOfSeatsEntityToString(bookedSeats));
 
         ticketRepository.save(ticketEntity);
         return TicketConverter.entityToDto(ticketEntity);
@@ -78,7 +79,7 @@ public class TicketServImplementation implements TicketService {
         String str = "";
         for(ShowSeatsEntity showSeatsEntity : bookedSeats){
 
-            str = str + showSeatsEntity.getSeatNo()+" ";
+            str = str + showSeatsEntity.getSeatNumber()+" ";
         }
 
         return str;
